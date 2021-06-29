@@ -28,7 +28,7 @@ entity CTL is
 end CTL;
 
 architecture Behavorial of CTL is
-  type state is (S0, S1, S2, S3, S4, S5, S6, S7);
+  type state is (S0, S1, S2, S3, S4, S5, S6, S7, check_ins);
   signal pr_state, nx_state : state;
   signal LD0: std_logic;
   signal LD1: std_logic;
@@ -45,6 +45,14 @@ architecture Behavorial of CTL is
   signal INC: std_logic;
   signal RST: std_logic;
   begin
+    S01 <= I_ROUTIR(3);
+    S00 <= I_ROUTIR(2);
+    
+    S11 <= I_ROUTIR(0);
+    S10 <= I_ROUTIR(1);
+
+    CMD <= '0' when I_ROUTIR(5 downto 4) = "01" else '1';
+
     process (I_RES, I_CLK)
     begin
         if (I_RES='1') then
@@ -56,25 +64,28 @@ architecture Behavorial of CTL is
 
     process (pr_state, I_ROUTIR, I_ZR0, I_ZR1, I_ZR2, I_ZR3)
     begin
-        LD0 <= '0'; LD1 <= '0'; LD2 <= '0'; LD3 <= '0';
-        LDPC <= '0';
+        LD0 <= '0';
+        LD1 <= '0';
+        LD2 <= '0';
+        LD3 <= '0';
         LDIR <= '0';
-        INC <= '0';
-        RST <= '0';
-        CMD <= '0';
-        
+        LDPC <= '0';
+        BUS_SEL <= '0';
+
         case pr_state is
             when S0 =>
               RST <= '1';
               nx_state <= S1;
             when S1 =>
+              RST <= '0';
               LDIR <= '1';
               INC <= '1';
               BUS_SEL <= '0';
-              S00 <= I_ROUTIR(2);
-              S01 <= I_ROUTIR(3);
-              S10 <= I_ROUTIR(0);
-              S11 <= I_ROUTIR(1);
+              nx_state <= check_ins;
+            when check_ins =>
+              RST <= '0';
+              LDIR <='0';
+              INC <= '0';
               case I_ROUTIR(5 downto 4) is
                 when "00" =>
                   if I_ROUTIR(1 downto 0) = "11" then
@@ -115,8 +126,10 @@ architecture Behavorial of CTL is
                     end case;
                 end case;
             when S2 =>
+              RST <= '0';
               nx_state <= S2;
             when S3 =>
+              RST <= '0';
               INC <= '1';
               BUS_SEL <= '0';
               case I_ROUTIR(3 downto 2) is
@@ -131,8 +144,9 @@ architecture Behavorial of CTL is
               end case;
               nx_state <= S1;
             when S4 =>
-              CMD <= '0';
+              RST <= '0';
               BUS_SEL <= '1';
+              INC <= '0';
               case I_ROUTIR(3 downto 2) is
                 when "00" =>
                   LD0 <= '1';
@@ -145,8 +159,9 @@ architecture Behavorial of CTL is
               end case;
               nx_state <= S1;
             when S5 =>
-              CMD <= '1';
+              RST <= '0';
               BUS_SEL <= '1';
+              INC <= '0';
               case I_ROUTIR(3 downto 2) is
                 when "00" =>
                   LD0 <= '1';
@@ -159,10 +174,13 @@ architecture Behavorial of CTL is
               end case;
               nx_state <= S1;
             when S6 =>
+              RST <= '0';
               LDPC <= '1';
+              INC <= '0';
               BUS_SEL <= '0';
               nx_state <= S1;
             when S7 =>
+              RST <= '0';
               INC <= '1';
               nx_state <= S1;
         end case;
