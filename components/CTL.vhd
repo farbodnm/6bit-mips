@@ -61,6 +61,7 @@ architecture Behavorial of CTL is
         LDIR <= '0';
         INC <= '0';
         RST <= '0';
+        CMD <= '0';
         
         case pr_state is
             when S0 =>
@@ -78,7 +79,6 @@ architecture Behavorial of CTL is
                 when "00" =>
                   if I_ROUTIR(1 downto 0) = "11" then
                     nx_state <= S2;
-                    CMD <= '0';
                   else
                     nx_state <= S3;
                   end if;
