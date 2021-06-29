@@ -11,7 +11,7 @@ entity IR is
 end IR;
 
 architecture Behavorial of IR is
-  signal temp: std_logic_vector(5 downto 0);
+  signal temp: std_logic_vector(5 downto 0) := "000000";
   begin
     process(I_CLK, I_LD, I_N)
     begin
@@ -20,7 +20,6 @@ architecture Behavorial of IR is
           temp <= I_N;
         end if;
       end if;
-
-      O_UT <= temp;
     end process;
+    O_UT <= temp;
   end Behavorial;

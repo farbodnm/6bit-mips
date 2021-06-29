@@ -29,7 +29,6 @@ architecture Behavorial of PC is
       if I_RST = '1' then
         temp <= "000000";
       end if;
-
-      O_UT <= temp;
     end process;
+    O_UT <= temp;
   end Behavorial;

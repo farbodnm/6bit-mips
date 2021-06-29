@@ -27,7 +27,6 @@ architecture Behavorial of REG is
       else
         O_ZR <= '0';
       end if;
-
-      O_UT <= temp;
     end process;
+    O_UT <= temp;
   end Behavorial;
