@@ -45,8 +45,8 @@ architecture Behavorial of CTL is
   signal INC: std_logic;
   signal RST: std_logic;
   begin
-    S01 <= I_ROUTIR(3);
-    S00 <= I_ROUTIR(2);
+    S01 <= I_ROUTIR(2);
+    S00 <= I_ROUTIR(3);
     
     S11 <= I_ROUTIR(0);
     S10 <= I_ROUTIR(1);
@@ -100,25 +100,25 @@ architecture Behavorial of CTL is
                 when others =>
                   case I_ROUTIR(3 downto 2) is
                     when "00" =>
-                      if (I_ZR0 = '0') then
+                      if (I_ZR0 = '1') then
                         nx_state <= S7;
                       else
                         nx_state <= S6;
                       end if;
                     when "01" =>
-                      if (I_ZR1 = '0') then
+                      if (I_ZR1 = '1') then
                         nx_state <= S7;
                       else
                         nx_state <= S6;
                       end if;
                     when "10" =>
-                      if (I_ZR2 = '0') then
+                      if (I_ZR2 = '1') then
                         nx_state <= S7;
                       else
                         nx_state <= S6;
                       end if;
                     when others =>
-                      if (I_ZR3 = '0') then
+                      if (I_ZR3 = '1') then
                         nx_state <= S7;
                       else
                         nx_state <= S6;
