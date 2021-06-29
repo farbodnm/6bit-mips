@@ -70,6 +70,10 @@ architecture Behavorial of CTL is
               LDIR <= '1';
               INC <= '1';
               BUS_SEL <= '0';
+              S00 <= I_ROUTIR(2);
+              S01 <= I_ROUTIR(3);
+              S10 <= I_ROUTIR(0);
+              S11 <= I_ROUTIR(1);
               case I_ROUTIR(5 downto 4) is
                 when "00" =>
                   if I_ROUTIR(1 downto 0) = "11" then
@@ -78,16 +82,8 @@ architecture Behavorial of CTL is
                     nx_state <= S3;
                   end if;
                 when "01" =>
-                  S00 <= I_ROUTIR(2);
-                  S01 <= I_ROUTIR(3);
-                  S10 <= I_ROUTIR(0);
-                  S11 <= I_ROUTIR(1);
                   nx_state <= S4;
                 when "10" =>
-                  S00 <= I_ROUTIR(2);
-                  S01 <= I_ROUTIR(3);
-                  S10 <= I_ROUTIR(0);
-                  S11 <= I_ROUTIR(1);
                   nx_state <= S5;
                 when others =>
                   case I_ROUTIR(3 downto 2) is
