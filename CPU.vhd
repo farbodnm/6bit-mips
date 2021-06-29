@@ -4,12 +4,12 @@ use ieee.numeric_std.ALL;
 library UNISIM;
 use UNISIM.Vcomponents.ALL;
 
-entity Schema is
+entity CPU is
    port ( CLK : in    std_logic; 
           RES : in    std_logic);
-end Schema;
+end CPU;
 
-architecture BEHAVIORAL of Schema is
+architecture BEHAVIORAL of CPU is
    signal ALURes      : std_logic_vector (5 downto 0);
    signal BUS_Sel     : std_logic;
    signal CMD         : std_logic;
