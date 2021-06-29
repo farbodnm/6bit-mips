@@ -45,8 +45,6 @@ architecture Behavorial of CTL is
   signal INC: std_logic;
   signal RST: std_logic;
   begin
-    S01 <= I_ROUTIR(3); S00 <= I_ROUTIR(2); S11 <= I_ROUTIR(1); S10 <= I_ROUTIR(0);
-
     process (I_RES, I_CLK)
     begin
         if (I_RES='1') then
@@ -130,6 +128,10 @@ architecture Behavorial of CTL is
             when S4 =>
               CMD <= '0';
               BUS_SEL <= '1';
+              S00 <= I_ROUTIR(2);
+              S01 <= I_ROUTIR(3);
+              S10 <= I_ROUTIR(0);
+              S11 <= I_ROUTIR(1);
               case I_ROUTIR(3 downto 2) is
                 when "00" =>
                   LD0 <= '1';
@@ -144,6 +146,10 @@ architecture Behavorial of CTL is
             when S5 =>
               CMD <= '1';
               BUS_SEL <= '1';
+              S00 <= I_ROUTIR(2);
+              S01 <= I_ROUTIR(3);
+              S10 <= I_ROUTIR(0);
+              S11 <= I_ROUTIR(1);
               case I_ROUTIR(3 downto 2) is
                 when "00" =>
                   LD0 <= '1';
